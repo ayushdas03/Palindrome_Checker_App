@@ -6,39 +6,41 @@ public class PalindromeCheckerApp {
 
 
     public static void main(String[] args) {
-        System.out.println("==========================================");
-        System.out.println(" Linked List Based Palindrome Checker ");
-        System.out.println("==========================================");
-
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("=== Recursive Palindrome Checker ===");
         System.out.print("Input : ");
         String input = sc.nextLine();
 
-        boolean result = isPalindrome(input);
+        boolean result = check(input, 0, input.length() - 1);
 
         System.out.println("Is Palindrome? : " + result);
 
         sc.close();
     }
 
-    private static boolean isPalindrome(String str) {
+    /**
+     * Recursively checks whether a string is palindrome.
+     *
+     * @param s     Input string
+     * @param start Starting index
+     * @param end   Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
 
-        LinkedList<Character> list = new LinkedList<>();
-
-        // Add characters to linked list
-        for (char ch : str.toCharArray()) {
-            list.add(ch);
+        // Base case: if pointers cross, string is palindrome
+        if (start >= end) {
+            return true;
         }
 
-        // Compare from both ends
-        while (list.size() > 1) {
-            if (!list.removeFirst().equals(list.removeLast())) {
-                return false;
-            }
+        // If mismatch found, not palindrome
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
 
-        return true;
+        // Recursive call for inner substring
+        return check(s, start + 1, end - 1);
     }
 }
 
