@@ -1,15 +1,17 @@
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class PalindromeCheckerApp {
-    static void main() {
-        Scanner sc = new Scanner(System.in);
+
+
+    public static void main(String[] args) {
 
         System.out.println("======================================");
-        System.out.println(" Queue + Stack Palindrome Checker ");
+        System.out.println(" Deque-Based Palindrome Checker App ");
         System.out.println("======================================");
+
+        Scanner sc = new Scanner(System.in);
 
         System.out.print("Input : ");
         String input = sc.nextLine();
@@ -21,20 +23,19 @@ public class PalindromeCheckerApp {
         sc.close();
     }
 
-    private static boolean checkPalindrome(String str) {
 
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+    private static boolean checkPalindrome(String s) {
 
-        // Add characters to both stack and queue
-        for (char ch : str.toCharArray()) {
-            stack.push(ch);
-            queue.add(ch);
+        Deque<Character> deque = new LinkedList<>();
+
+        // Add all characters to deque
+        for (char ch : s.toCharArray()) {
+            deque.addLast(ch);
         }
 
-        // Compare elements
-        while (!stack.isEmpty()) {
-            if (stack.pop() != queue.remove()) {
+        // Compare front and rear characters
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
                 return false;
             }
         }
