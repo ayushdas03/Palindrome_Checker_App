@@ -6,36 +6,34 @@ public class PalindromeCheckerApp {
 
 
     public static void main(String[] args) {
-
-        System.out.println("======================================");
-        System.out.println(" Deque-Based Palindrome Checker App ");
-        System.out.println("======================================");
+        System.out.println("==========================================");
+        System.out.println(" Linked List Based Palindrome Checker ");
+        System.out.println("==========================================");
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Input : ");
         String input = sc.nextLine();
 
-        boolean result = checkPalindrome(input);
+        boolean result = isPalindrome(input);
 
         System.out.println("Is Palindrome? : " + result);
 
         sc.close();
     }
 
+    private static boolean isPalindrome(String str) {
 
-    private static boolean checkPalindrome(String s) {
+        LinkedList<Character> list = new LinkedList<>();
 
-        Deque<Character> deque = new LinkedList<>();
-
-        // Add all characters to deque
-        for (char ch : s.toCharArray()) {
-            deque.addLast(ch);
+        // Add characters to linked list
+        for (char ch : str.toCharArray()) {
+            list.add(ch);
         }
 
-        // Compare front and rear characters
-        while (deque.size() > 1) {
-            if (!deque.removeFirst().equals(deque.removeLast())) {
+        // Compare from both ends
+        while (list.size() > 1) {
+            if (!list.removeFirst().equals(list.removeLast())) {
                 return false;
             }
         }
@@ -43,3 +41,4 @@ public class PalindromeCheckerApp {
         return true;
     }
 }
+
