@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -6,37 +8,33 @@ public class PalindromeCheckerApp {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("======================================");
-        System.out.println(" Stack-Based Palindrome Checker ");
+        System.out.println(" Queue + Stack Palindrome Checker ");
         System.out.println("======================================");
 
         System.out.print("Input : ");
         String input = sc.nextLine();
 
-        boolean result = checkUsingStack(input);
+        boolean result = checkPalindrome(input);
 
         System.out.println("Is Palindrome? : " + result);
 
         sc.close();
     }
 
-    /**
-     * Checks whether a string is palindrome using Stack.
-     *
-     * @param s Input string
-     * @return true if palindrome, otherwise false
-     */
-    private static boolean checkUsingStack(String s) {
+    private static boolean checkPalindrome(String str) {
 
         Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
 
-        // Push all characters onto stack
-        for (int i = 0; i < s.length(); i++) {
-            stack.push(s.charAt(i));
+        // Add characters to both stack and queue
+        for (char ch : str.toCharArray()) {
+            stack.push(ch);
+            queue.add(ch);
         }
 
-        // Compare characters while popping
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) != stack.pop()) {
+        // Compare elements
+        while (!stack.isEmpty()) {
+            if (stack.pop() != queue.remove()) {
                 return false;
             }
         }
