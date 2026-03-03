@@ -1,46 +1,35 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
+    // Method to check palindrome (ignores case and spaces)
+    public static boolean isPalindrome(String input) {
+
+        // Remove all spaces
+        String cleaned = input.replaceAll("\\s+", "");
+
+        // Convert to lowercase
+        cleaned = cleaned.toLowerCase();
+
+        // Reverse the string
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+
+        // Compare original cleaned string with reversed string
+        return cleaned.equals(reversed);
+    }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Recursive Palindrome Checker ===");
-        System.out.print("Input : ");
-        String input = sc.nextLine();
+        System.out.println("Enter a string:");
+        String input = scanner.nextLine();
 
-        boolean result = check(input, 0, input.length() - 1);
-
-        System.out.println("Is Palindrome? : " + result);
-
-        sc.close();
-    }
-
-    /**
-     * Recursively checks whether a string is palindrome.
-     *
-     * @param s     Input string
-     * @param start Starting index
-     * @param end   Ending index
-     * @return true if palindrome, otherwise false
-     */
-    private static boolean check(String s, int start, int end) {
-
-        // Base case: if pointers cross, string is palindrome
-        if (start >= end) {
-            return true;
+        if (isPalindrome(input)) {
+            System.out.println("It is a palindrome (ignoring case and spaces).");
+        } else {
+            System.out.println("It is NOT a palindrome.");
         }
 
-        // If mismatch found, not palindrome
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call for inner substring
-        return check(s, start + 1, end - 1);
+        scanner.close();
     }
 }
-
