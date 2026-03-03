@@ -1,31 +1,47 @@
 import java.util.Scanner;
 
+// Service class (Business Logic)
+class PalindromeService {
+
+    // Method to check palindrome (case-insensitive & space-ignored)
+    public boolean isPalindrome(String input) {
+        if (input == null) {
+            return false;
+        }
+
+        // Remove spaces and convert to lowercase
+        String cleaned = input.replaceAll("\\s+", "").toLowerCase();
+
+        int left = 0;
+        int right = cleaned.length() - 1;
+
+        while (left < right) {
+            if (cleaned.charAt(left) != cleaned.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+}
+
+// Main Application Class
 public class PalindromeCheckerApp {
 
-    // Method to check palindrome (ignores case and spaces)
-    public static boolean isPalindrome(String input) {
-
-        // Remove all spaces
-        String cleaned = input.replaceAll("\\s+", "");
-
-        // Convert to lowercase
-        cleaned = cleaned.toLowerCase();
-
-        // Reverse the string
-        String reversed = new StringBuilder(cleaned).reverse().toString();
-
-        // Compare original cleaned string with reversed string
-        return cleaned.equals(reversed);
-    }
-
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
+        PalindromeService service = new PalindromeService();
 
         System.out.println("Enter a string:");
         String input = scanner.nextLine();
 
-        if (isPalindrome(input)) {
-            System.out.println("It is a palindrome (ignoring case and spaces).");
+        boolean result = service.isPalindrome(input);
+
+        if (result) {
+            System.out.println("It is a palindrome.");
         } else {
             System.out.println("It is NOT a palindrome.");
         }
