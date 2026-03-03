@@ -1,15 +1,24 @@
 import java.util.Scanner;
 
-// Service class (Business Logic)
-class PalindromeService {
+// Strategy Interface
+interface PalindromeStrategy {
+    boolean isPalindrome(String input);
+}
 
-    // Method to check palindrome (case-insensitive & space-ignored)
+// Strategy 1: Reverse String Method
+class ReversePalindromeStrategy implements PalindromeStrategy {
+
     public boolean isPalindrome(String input) {
-        if (input == null) {
-            return false;
-        }
+        String cleaned = input.replaceAll("\\s+", "").toLowerCase();
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+        return cleaned.equals(reversed);
+    }
+}
 
-        // Remove spaces and convert to lowercase
+// Strategy 2: Two Pointer Method
+class TwoPointerPalindromeStrategy implements PalindromeStrategy {
+
+    public boolean isPalindrome(String input) {
         String cleaned = input.replaceAll("\\s+", "").toLowerCase();
 
         int left = 0;
@@ -22,28 +31,47 @@ class PalindromeService {
             left++;
             right--;
         }
-
         return true;
     }
 }
 
-// Main Application Class
+// Main Application
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        PalindromeService service = new PalindromeService();
 
         System.out.println("Enter a string:");
         String input = scanner.nextLine();
 
-        boolean result = service.isPalindrome(input);
+        PalindromeStrategy reverseStrategy = new ReversePalindromeStrategy();
+        PalindromeStrategy twoPointerStrategy = new TwoPointerPalindromeStrategy();
 
-        if (result) {
-            System.out.println("It is a palindrome.");
+        // Measure Reverse Strategy Time
+        long start1 = System.nanoTime();
+        boolean result1 = reverseStrategy.isPalindrome(input);
+        long end1 = System.nanoTime();
+        long time1 = end1 - start1;
+
+        // Measure Two Pointer Strategy Time
+        long start2 = System.nanoTime();
+        boolean result2 = twoPointerStrategy.isPalindrome(input);
+        long end2 = System.nanoTime();
+        long time2 = end2 - start2;
+
+        System.out.println("\nReverse Method Result: " + result1);
+        System.out.println("Reverse Method Time (nanoseconds): " + time1);
+
+        System.out.println("\nTwo Pointer Method Result: " + result2);
+        System.out.println("Two Pointer Method Time (nanoseconds): " + time2);
+
+        if (time1 < time2) {
+            System.out.println("\nReverse Method is faster.");
+        } else if (time2 < time1) {
+            System.out.println("\nTwo Pointer Method is faster.");
         } else {
-            System.out.println("It is NOT a palindrome.");
+            System.out.println("\nBoth methods took equal time.");
         }
 
         scanner.close();
